@@ -1,0 +1,24 @@
+<!-- Frota -->
+    <item android:title="FROTA"
+        android:id="@+id/nav_fleet">
+        <menu>
+            <group android:checkableBehavior="single"
+                android:id="@+id/group_fleet"
+                android:title="Frota">
+                <item
+                    android:id="@+id/nav_trip"
+                    android:icon="@drawable/icon_route"
+                    android:title="Viagens"/>
+
+                <item
+                    android:id="@+id/nav_driver"
+                    android:icon="@drawable/icon_users"
+                    android:title="Motoristas"/>
+
+                <item
+                    android:id="@+id/nav_trailer"
+                    android:icon="@drawable/icon_truck"
+                    android:title="Carretas"/>
+            </group>
+        </menu>
+    </item>

@@ -1,0 +1,20 @@
+ <item android:title="ADMINISTRATIVO"
+        android:id="@+id/nav_administrative">
+        <menu>
+            <group
+                android:id="@+id/group_administrative"
+                android:checkableBehavior="single"
+                android:title="Administrativo">
+
+                <item
+                    android:id="@+id/nav_products"
+                    android:icon="@drawable/icon_products"
+                    android:title="Produtos" />
+
+                <item
+                    android:id="@+id/nav_permissions"
+                    android:icon="@drawable/icon_permissions"
+                    android:title="Permissões" />
+            </group>
+        </menu>
+    </item>

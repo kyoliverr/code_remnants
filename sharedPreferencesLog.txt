@@ -1,0 +1,9 @@
+ val sharedPref = requireContext().getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+        val token = sharedPref.getString("TOKEN", "") ?: ""
+        val client = sharedPref.getString("CLIENT", "") ?: ""
+        val username = sharedPref.getString("USERNAME", "") ?: ""
+        val modules = sharedPref.getString("MODULES", null)?.split(",") ?: emptyList()
+        Log.d("API_DEBUG", "Token: $token, client: $client, Username: $username, Modules: $modules")
+
+
+//testando se as informações estão sendo salvas corretamente

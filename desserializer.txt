@@ -1,0 +1,40 @@
+class HomeDeviceDeserializer : JsonDeserializer<HomeDevice> {
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext
+    ): HomeDevice {
+        val jsonObject = json.asJsonObject
+
+        val device = context.deserialize<Device>(jsonObject.get("device"), Device::class.java)
+
+        val fullPackageElement = jsonObject.get("fullPackage")
+        val fullPackageList: List<FullPackage> = when {
+            fullPackageElement.isJsonArray -> {
+                fullPackageElement.asJsonArray.map { element ->
+                    parseFullPackage(element.asJsonObject, context)
+                }
+            }
+            fullPackageElement.isJsonObject -> {
+                listOf(parseFullPackage(fullPackageElement.asJsonObject, context))
+            }
+            else -> emptyList()
+        }
+        Log.d("DESERIALIZER", "fullPackageElement = $fullPackageElement")
+
+        return HomeDevice(device, fullPackageList)
+    }
+
+    private fun parseFullPackage(
+        obj: JsonObject,
+        context: JsonDeserializationContext
+    ): FullPackage {
+        val location = context.deserialize<LocationPackage>(obj, LocationPackage::class.java)
+        val status = context.deserialize<StatusPackage>(obj, StatusPackage::class.java)
+        val externalVoltage = if (obj.has("externalVoltage") && !obj.get("externalVoltage").isJsonNull)
+            obj.get("externalVoltage").asString
+        else null
+
+        return FullPackage(location, status, externalVoltage)
+    }
+}

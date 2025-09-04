@@ -1,0 +1,31 @@
+private fun addMarker(map: MapView, latitude: Double, longitude: Double, title: String? = null) {
+        val marker = Marker(map)
+        marker.position = GeoPoint(latitude, longitude)
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHORBOTTOM)
+        marker.title = title
+
+        marker.setOnMarkerClickListener { , _ ->
+            Log.d("MarkerClick", "Marker clicked: $title")
+            true
+        }
+
+        map.overlays.add(marker)
+    }
+
+private fun addMarkersOnMap(devices: List<HomeDevice>){
+        val map = binding.map
+        map.overlays.clear()
+
+        for (device in devices) {
+            val packageData = device.fullPackage.firstOrNull()
+            val latitude = packageData?.locationPackage?.latitude
+            val longitude = packageData?.locationPackage?.longitude
+
+            if (latitude != null && longitude != null) {
+                val pinTitle = device.device.vehicle?.license_plate
+                addMarker(map, latitude, longitude, pinTitle)
+            }
+        }
+
+        map.invalidate()
+    }

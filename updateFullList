@@ -1,0 +1,26 @@
+// Loading Screen
+        binding.groupRecycle.loader.visibility = View.VISIBLE
+        binding.groupRecycle.recyclerView.visibility = View.GONE
+
+        // RecyclerView
+        gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        binding.groupRecycle.recyclerView.layoutManager = gridLayoutManager
+
+        groupDataList = ArrayList()
+        adapter = GroupAdapter(requireContext(), groupDataList, this)
+        binding.groupRecycle.recyclerView.adapter = adapter
+        
+        updateList(groupDataList, groupList(requireContext(), binding))
+        adapter.updateFullList(groupDataList)
+        
+        getAllGroups(requireContext(),
+            onSuccess = { groups ->
+                groupDataList.clear()
+                groupDataList.addAll(groups ?: emptyList())
+                adapter.updateFullList(groupDataList)
+
+                binding.groupRecycle.loader.visibility = View.GONE
+                binding.groupRecycle.recyclerView.visibility = View.VISIBLE
+            },onError = {
+                binding.groupRecycle.loader.visibility = View.GONE
+                binding.groupRecycle.recyclerView.visibility = View.VISIBLE })

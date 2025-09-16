@@ -24,3 +24,19 @@
             },onError = {
                 binding.groupRecycle.loader.visibility = View.GONE
                 binding.groupRecycle.recyclerView.visibility = View.VISIBLE })
+
+
+private fun updateFullList(){
+        gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        binding.groupRecycle.recyclerView.layoutManager = gridLayoutManager
+
+        groupDataList = ArrayList()
+        adapter = GroupAdapter(requireContext(), groupDataList, this)
+        binding.groupRecycle.recyclerView.adapter = adapter
+
+        val group = groupList(requireContext(), binding)
+        updateList(groupDataList, group)
+        adapter.updateFullList(groupDataList)
+    }
+
+

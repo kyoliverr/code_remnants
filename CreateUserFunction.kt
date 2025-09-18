@@ -97,4 +97,65 @@ override fun onMoreInfoClick(user: User) {
         binding.moreUserInfo.setOnClickListener{}
     } //Read
 
+Log.d("API_EDIT_CLICK", "Usuário Original: $user")
+        binding.hiddenEditUserLayout.visibility = View.VISIBLE
+        binding.editUser.setOnClickListener{}
+
+        binding.editUserName.setText(user.username)
+        binding.editUserEmail.setText(user.email)
+        binding.editUserLineNumber.setText(user.line_number)
+        binding.editUserCEP.setText(user.address.zip_code)
+        binding.editUserStreet.setText(user.address.street)
+        binding.editUserNumber.setText(user.address.number)
+        binding.editUserComplement.setText(user.address.complement)
+        binding.editUserNeighborhood.setText(user.address.neighborhood)
+        binding.editUserCity.setText(user.address.city)
+        binding.editUserState.setText(user.address.state)
+        binding.editUserCountry.setText(user.address.country)
+
+        setupRoleSpinner(requireContext(), binding.editUserRole, allRolesCache!!, user.role.id)
+        setupEnterpriseSpinner(requireContext(), binding.editUserEnterprise, allEnterprisesCache!!, user.enterprise.id)
+
+        binding.editUserButton.setOnClickListener {
+            if (binding.editUserPassword.text.toString() == binding.editUserPasswordCheck.text.toString()) { //validation
+                val selectedRolePair = binding.editUserRole.getSelectedOrNull()
+                val selectedRole = selectedRolePair?.let { UserRole(it.first, it.second) }
+
+                val selectedEnterprisePair = binding.editUserEnterprise.getSelectedOrNull()
+                val selectedEnterprise = selectedEnterprisePair?.let { UserEnterprise(it.first, it.second) }
+
+                when {
+                    binding.editUserName.text.isBlank() -> showError(requireContext(),"Nome não pode estar vazio")
+                    selectedRole == null -> showError(requireContext(),"Cargo não pode estar vazio")
+                    selectedEnterprise == null -> showError(requireContext(),"Empresa não pode estar vazia")
+                    else -> {
+                        val updatedUser = UserPayload(
+                            username = binding.editUserName.text.toString(),
+                            email = binding.editUserEmail.text.toString(),
+                            password = binding.editUserPassword.text.toString(),
+                            line_number = binding.editUserLineNumber.text.toString(),
+                            enterprise_id = selectedEnterprise!!.id,
+                            role_id = selectedRole!!.id,
+                            role_label = selectedRole!!.name,
+                            zip_code = binding.editUserCEP.text.toString(),
+                            street = binding.editUserStreet.text.toString(),
+                            number = binding.editUserNumber.text.toString(),
+                            complement = binding.editUserComplement.text.toString(),
+                            neighborhood = binding.editUserNeighborhood.text.toString(),
+                            city = binding.editUserCity.text.toString(),
+                            state = binding.editUserState.text.toString(),
+                            country = binding.editUserCountry.text.toString()
+                        )
+                        editUser(requireContext(), user.id, updatedUser,
+                            onSuccess = { updateFullList() }, onError = {})
+                    }
+                }
+            } else { showError(requireContext(),"As senhas não concidem") }
+        }
+        binding.hiddenEditUserBody.setOnClickListener {
+            binding.hiddenEditUserLayout.visibility = View.GONE
+        }
+        binding.cancelEditUserButton.setOnClickListener {
+            binding.hiddenEditUserLayout.visibility = View.GONE
+        }
 

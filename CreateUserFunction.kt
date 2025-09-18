@@ -69,3 +69,32 @@ binding.hiddenCreateUserLayout.visibility = View.VISIBLE
                 }
             }
             binding.createUser.setOnClickListener{}
+
+
+override fun onMoreInfoClick(user: User) {
+        val hiddenUserInfoLayout = binding.hiddenUserInfoLayout
+        val hiddenUserInfoBody = binding.hiddenUserInfoBody
+        val moreUserInfo = binding.moreUserInfo
+        val userName = binding.userName
+        val userEmail = binding.userEmail
+        val userLineNumber = binding.userLineNumber
+        val userRole = binding.userRole
+        val userEnterprise = binding.userEnterprise
+        val userAddress = binding.userAddress
+
+        binding.hiddenUserInfoLayout.visibility = View.VISIBLE
+
+        binding.userName.text = user.username
+        binding.userEmail.text = user.email
+        binding.userLineNumber.text = user.line_number.orNull()
+        binding.userRole.text = user.role.name
+        binding.userEnterprise.text = user.enterprise.name
+        binding.userAddress.text = user.address.full_address.orNull()
+
+        binding.hiddenUserInfoBody.setOnClickListener {
+            binding.hiddenUserInfoLayout.visibility = View.GONE
+        }
+        binding.moreUserInfo.setOnClickListener{}
+    } //Read
+
+

@@ -159,3 +159,20 @@ Log.d("API_EDIT_CLICK", "Usuário Original: $user")
             binding.hiddenEditUserLayout.visibility = View.GONE
         }
 
+
+val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Deletar Usuário")
+            .setMessage("Você tem certeza que quer deletar esse usuário?")
+            .setPositiveButton("Sim") { _, _ ->
+                deleteUser(requireContext(), userId,
+                    { updateFullList() }, {})
+            }
+            .setNegativeButton("Não", null)
+            .create()
+
+        dialog.setOnShowListener{
+            dialog.window?.setBackgroundDrawableResource(android.R.color.white)
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(android.graphics.Color.RED)
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getColor(requireContext(), R.color.blue))
+        }
+        dialog.show()

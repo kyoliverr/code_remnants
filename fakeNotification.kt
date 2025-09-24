@@ -61,3 +61,35 @@ private fun fakeNotificationList() {
         binding.notificationRecycle.loader.visibility = View.GONE
         binding.notificationRecycle.recyclerView.visibility = View.VISIBLE
     }
+
+private fun showNotification(title: String, message: String) {
+        val channelId = "notifications_chanel"
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Notificações",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            manager.createNotificationChannel(channel)
+        }
+
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            context, 0, intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val notification = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .build()
+
+        manager.notify(System.currentTimeMillis().toInt(), notification)
+    }

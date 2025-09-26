@@ -1,0 +1,82 @@
+
+//Os arquivos xml foram deletados, mas apenas falta o botão de modo suporte
+
+holder.supportMode.setOnClickListener {
+            listener.onSupportModeClick(dataList[position])
+        }
+
+var supportMode: ImageButton = itemView.findViewById(R.id.supportMode)
+
+
+override fun onSupportModeClick(enterprise: Enterprise) {
+        Log.d("API_SUPPORT_MODE_CLICK", "Empresa: $enterprise")
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Ativar Modo Suporte")
+            .setMessage(
+                "Tem certeza que deseja ativar o Modo Suporte para essa empresa?\n\n" +
+                "Empresa selecionada: ${enterprise.name}"
+            )
+            .setPositiveButton("Conectar") { _, _ ->
+                if (enterprise.mainUser.id == 0) {
+                    showError(requireContext(), "ERRO: Empresa não possui usuário principal")
+                    return@setPositiveButton
+                } else { supportModeEnterprise(enterprise.id) }
+            }
+            .create()
+
+        dialog.setOnShowListener{
+            dialog.window?.setBackgroundDrawableResource(android.R.color.white)
+
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setTextColor(getColor(requireContext(), R.color.white))
+            positiveButton.setBackgroundColor(getColor(requireContext(), R.color.blue))
+
+            val params = positiveButton.layoutParams as? ViewGroup.MarginLayoutParams
+            params?.bottomMargin = (8 * resources.displayMetrics.density).toInt()
+            positiveButton.layoutParams = params
+        }
+        dialog.show()
+    }
+    private fun supportModeEnterprise(enterpriseId: Int){
+        val permission = "user.changeAccount"
+        val api = RetrofitInstance.getApiService(requireContext(), permission)
+        lifecycleScope.launch {
+            try{
+                val response = api.changeToSupportMode(enterpriseId) //código que vai sair dessa conta e entrar em outra
+                if (response.isSuccessful){
+
+                    Log.d("API_SUCCESS", "Status: ${response.body()?.status}, Message: ${response.body()?.toString()}")
+                    Log.d("API_RESULTS", "Response: $response")
+                    Toast.makeText(requireContext(), "Modo Suporte ativado", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e("API_ERROR1", "Error trying to inject data in API: $response")
+                }
+            } catch (e:Exception) {
+                Log.e("API_ERROR", "Erro ao trocar para o modo suporte: ${e.message}")
+            }
+        }
+    }
+
+    fun enterpriseSupportButton(context: Context, enterprise: Enterprise, onSuccess: () -> Unit, onError: () -> Unit){
+
+    val api = RetrofitInstance.getApiService(context, "user.changeAccount")
+    CoroutineScope(Dispatchers.Main).launch {
+        try {
+            val response = api.changeToSupportMode(enterprise.id) //código que vai sair dessa conta e entrar em outra
+            if (response.isSuccessful){
+
+                Log.d("API_SUCCESS", "Status: ${response.body()?.status}, Message: ${response.body()?.toString()}")
+                Log.d("API_RESULTS", "Response: $response")
+                Toast.makeText(context, "Modo Suporte ativado", Toast.LENGTH_SHORT).show()
+                onSuccess()
+            } else {
+                Log.e("API_ERROR1", "Error trying to inject data in API: ${response.body()?.toString()}")
+            }
+        } catch (e: Exception) {
+            Log.e("API_ERROR", "Erro ao trocar para o modo suporte: ${e.message}")
+            onError()
+        }
+    }
+}
+

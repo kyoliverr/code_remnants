@@ -1,0 +1,22 @@
+{
+    "id": 1
+    "name": "Entrega de carga #142",
+    "description": "Entrega de papel encomendada por empresa X",
+    "status": "ativo",
+    "address": "Rua dos Bobos, 0",
+    "begin_datetime": "25-10-16 10:00:00",
+    "end_datetime": null,
+    "enterprise" :{
+        "id": 1,
+        "name": "Empresa X"
+    }
+    "fields": :{
+        "name": "responsible",
+        "type": "string",
+        "value": "(aqui haverá uma imagem em base64 da assinatura)"
+    }, {
+        "name": "photo",
+        "type": "string",
+        "value": "(aqui haverá uma imagem em base64)"
+    }
+}

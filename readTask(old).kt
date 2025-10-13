@@ -85,3 +85,17 @@ fun bindClient(signatureCode: String? = null, binding: FragmentTaskBinding){
         binding.clientSignature.taskUnassigned.visibility = View.VISIBLE
     }
 }
+
+fun clearReadTaskUI(binding: FragmentTaskBinding){
+    binding.taskPhoto.setImageBitmap(null)
+    binding.taskPhoto.visibility = View.GONE
+
+    binding.employeeSignature.taskSigned.setImageBitmap(null)
+    binding.employeeSignature.taskSigned.visibility = View.GONE
+    binding.clientSignature.taskSigned.setImageBitmap(null)
+    binding.clientSignature.taskSigned.visibility = View.GONE
+
+    binding.employeeSignature.taskUnassigned.visibility = View.VISIBLE
+    binding.clientSignature.taskUnassigned.visibility = View.VISIBLE
+}
+

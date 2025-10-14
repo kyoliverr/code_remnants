@@ -1,0 +1,29 @@
+//fun setImage(context: Context, binding: FragmentTaskBinding, task: TaskTest, pickImageLauncher: ActivityResultLauncher<String>, takePictureLauncher: (Uri) -> Unit){
+//    if (task.photo.isNullOrEmpty()){
+//        binding.updateTaskPhoto.setOnClickListener {
+//            pickImageLauncher.launch("image/*")
+//        }
+//        binding.updateTaskCamera.setOnClickListener {
+//            val imageFile = File.createTempFile("cameraphoto", ".jpg", context.cacheDir)
+//            val imageUri = FileProvider.getUriForFile(
+//                context,
+//                "${context.packageName}.provider",
+//                imageFile
+//            )
+//            takePictureLauncher(imageUri)
+//        }
+//    }
+//    else {
+//        binding.updateTaskPhoto.visibility = View.GONE
+//        binding.updateTaskCamera.visibility = View.GONE
+//        val photo = base64ToImage(task.photo!!)
+//        photo?.let {
+//            binding.previewImage.setImageBitmap(it)
+//        }
+//        binding.previewImage.visibility = View.VISIBLE
+//    }
+//    binding.previewImage.setOnLongClickListener {
+//        //imageOptions(context, binding, pickImageLauncher, takePictureLauncher)
+//        true
+//    }
+//}

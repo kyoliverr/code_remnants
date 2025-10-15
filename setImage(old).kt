@@ -27,3 +27,28 @@
 //        true
 //    }
 //}
+
+//fun setClient(context: Context, binding: FragmentTaskBinding, task: TaskTest){
+//    if (task.client_signature.isNullOrEmpty()){
+//        binding.updateClient.visibility = View.VISIBLE
+//        binding.updateClientPhoto.visibility = View.GONE
+//        //binding.updateClient.setOnClickListener {
+//        //    drawSignature(context, binding,  binding.updateClient, binding.updateClientPhoto, null,{}, {})
+//        //}
+//        //drawSignature(context, binding,  binding.updateClient, binding.updateClientPhoto, null,{}, {})
+//    }
+//    else{
+//        binding.updateClient.visibility = View.GONE
+//        val signature = base64ToImage(task.client_signature!!)
+//        signature?.let {
+//            binding.updateClientPhoto.setImageBitmap(it)
+//        }
+//        binding.updateClientPhoto.visibility = View.VISIBLE
+//    }
+//    binding.updateClientPhoto.setOnClickListener {
+//        //reSignPopup(context, binding.updateClient, binding.updateClientPhoto, {
+//        //    binding.updateClient.setOnClickListener { drawSignature(context, binding,  binding.updateClient,
+//        //        binding.updateClientPhoto, null,{}, {}) }
+//        //}, {})
+//    }
+//}

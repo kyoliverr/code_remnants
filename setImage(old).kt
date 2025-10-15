@@ -52,3 +52,24 @@
 //        //}, {})
 //    }
 //}
+
+//fun setEmployee(context: Context, binding: FragmentTaskBinding, task: TaskTest){
+//    if (task.employee_signature.isNullOrEmpty()){
+//        binding.updateEmployee.visibility = View.VISIBLE
+//        binding.updateEmployeePhoto.visibility = View.GONE
+//        //signMethod(context, binding) //change back if error
+//    }
+//    else{
+//        binding.updateEmployee.visibility = View.GONE
+//        val signature = base64ToImage(task.employee_signature!!)
+//        signature?.let {
+//            binding.updateEmployeePhoto.setImageBitmap(it)
+//        }
+//        binding.updateEmployeePhoto.visibility = View.VISIBLE
+//    }
+//    binding.updateEmployeePhoto.setOnClickListener {
+//        reSignPopup(context, binding.updateEmployee, binding.updateEmployeePhoto, {
+//            //signMethod(context, binding)
+//        }, {})
+//    }
+//}
